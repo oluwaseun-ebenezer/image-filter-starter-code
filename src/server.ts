@@ -1,4 +1,5 @@
 import express from "express";
+import { Request, Response } from "express";
 import bodyParser from "body-parser";
 import { filterImageFromURL, deleteLocalFiles } from "./util/util";
 
@@ -28,14 +29,14 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
 
   /**************************************************************************** */
   app.get("/filteredimage", async (req: Request, res: Response) => {
-    const image_url: String = req.query.image_url;
+    const image_url: string = req.query.image_url;
 
     if (!image_url) {
       res.status(400).send("Please, pass image url in the query");
     }
 
     filterImageFromURL(image_url)
-      .then((image_path: String) => {
+      .then((image_path: string) => {
         res.sendFile(image_path);
 
         res.on("finish", () => {
